@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package auth;
+option go_package = "proto/auth";
+
+// Sample represents sample object
+message Sample {
+  // Id - unique identifier
+  string Id = 1;
+  // Name - sample name
+  string Name = 2;
+}
+
+// Request to create a new sample
+message CreateSampleRequest {
+  // Name - sample name
+  string Name = 1;
+}
+
+// request to update sample
+message UpdateSampleRequest {
+  // Id - unique identifier
+  string Id = 1;
+  // Name - sample name
+  string Name = 2;
+}
+
+// request with sample id
+message SampleIdRequest {
+  string Id = 1;
+}
+
+// empty response
+message EmptyResponse {}
+
+
+// PagingRequest - request search results in paged manner
+message PagingRequest {
+  // size of a page (100 by default)
+  int32 Size = 1;
+  // index of presented page (0-based)
+  int32 Index = 2;
+}
+
+// PagingResponse search response in paged manner
+message PagingResponse {
+  // how many pages found
+  int32 Total = 1;
+  // index of current page
+  int32 Index = 2;
+}
+
+// SearchCriteria defines sample search criteria
+message SearchCriteria {
+  // paging support
+  PagingRequest     Paging = 1;
+  // Name - search by name
+  string Name = 2;
+}
+
+// SearchResponse represents result of sample search
+message SearchResponse  {
+  // paging support
+  PagingResponse Paging = 1;
+  // Samples - list of samples found
+  repeated Sample Samples = 2;
+}
+
+// SampleService allows manipulating with samples
+service SampleService {
+  // Create creates a new sample
+  rpc Create(CreateSampleRequest) returns (Sample) {}
+  // Update updates an existent consultant
+  rpc Update(UpdateSampleRequest) returns (Sample) {}
+  // Get retrieves a sample by id
+  rpc Get(SampleIdRequest) returns (Sample) {}
+  // Delete sample
+  rpc Delete(SampleIdRequest) returns (EmptyResponse) {}
+  // Search searches samples
+  rpc Search(SearchCriteria) returns (SearchResponse) {}
+}

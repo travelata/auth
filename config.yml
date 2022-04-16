@@ -1,0 +1,108 @@
+# grpc configuration
+grpc:
+  # host (mostly used for grpc tests to connect from client)
+  host: ${AUTH_GRPC_HOST|localhost}
+  # grpc port
+  port: ${AUTH_GRPC_PORT|50050}
+  # enabling tracing all the requests/responses
+  trace: ${AUTH_GRPC_TRACE|false}
+
+# NATS client
+nats:
+  # host
+  host: ${NATS_HOST|localhost}
+  # port
+  port: 4222
+  # cluster Id
+  clusterId: ${NATS_CLUSTER_ID|test-cluster}
+
+# storages configuration
+storages:
+  # redis client
+  redis:
+    # port
+    port: 6379
+    # host
+    host: ${REDIS_HOST|localhost}
+    # password
+    password: ${REDIS_PASSWORD|}
+    # default ttl
+    ttl: 7200
+  # database client
+  database:
+    # local path to migration folder
+    mig-path: ${TRAVELATAROOT|}/auth/db/migrations
+    # db master config
+    master:
+      # database name
+      dbname: ${AUTH_DB_MASTER_NAME|travelata}
+      # db username
+      user: auth
+      # db password
+      password: ${AUTH_DB_MASTER_PASSWORD|auth}
+      # db port
+      port: 5432
+      # host for master (read-write) database
+      host: ${AUTH_DB_MASTER_HOST|localhost}
+    # db slave config
+    slave:
+      # database name
+      dbname: ${AUTHDB_SLAVE_NAME|travelata}
+      # db username
+      user: auth
+      # db password
+      password: ${AUTH_DB_SLAVE_PASSWORD|auth}
+      # db port
+      port: 5432
+      # host for master (read-write) database
+      host: ${AUTH_DB_SLAVE_HOST|localhost}
+  # elastic search client config
+  es:
+    # host
+    host: ${ES_HOST|localhost}
+    # port
+    port: 9200
+    # tracing mode
+    trace: ${ES_TRACE|true}
+    # sniffing
+    sniff: false
+
+# logging configuration
+log:
+  # level
+  level: ${AUTH_LOG_LEVEL|trace}
+  # output format (plain, json)
+  format: ${AUTH_LOG_FORMAT|plain}
+
+# cluster configuration
+cluster:
+  # cluster size (used by RAFT leader election algo)
+  size: ${AUTH_CLUSTER_SIZE|1}
+  # path to log
+  log: "/tmp/raft.log"
+
+# monitoring
+monitoring:
+  # enabled
+  enabled: ${AUTH_MONITORING_ENABLED|false}
+  # on which port metrics are exposed
+  port: ${AUTH_MONITORING_PORT|9000}
+  # on which url metrics are exposed
+  url: /metrics
+  # indicates to expose internal GO engine metrics
+  go-metrics: false
+
+# adapters configuration
+adapters:
+  # another gRPC service adapter
+  # this is just a sample (remove it)
+  another:
+    # grpc client configuration
+    grpc:
+      # host
+      host: ${ANOTHER_GRPC_HOST|localhost}
+      # port
+      # put your correct port number here
+      port: ${ANOTHER_GRPC_PORT|51222}
+
+
